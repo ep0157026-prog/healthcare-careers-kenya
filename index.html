@@ -247,35 +247,68 @@ Post a Job
 </footer>
 
 <script>
-const searchInput=document.getElementById("searchInput");
-const typeFilter=document.getElementById("typeFilter");
-const jobs=document.querySelectorAll(".job");
-const noResults=document.getElementById("noResults");
+const API_URL = "https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0DQZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
 
-function filterJobs(){
-const search=searchInput.value.toLowerCase();
-const type=typeFilter.value;
-let visible=0;
+const searchInput = document.getElementById("searchInput");
+const typeFilter = document.getElementById("typeFilter");
+const jobList = document.getElementById("jobList");
+const noResults = document.getElementById("noResults");
 
-jobs.forEach(job=>{
-const text=job.innerText.toLowerCase();
-const matchesSearch=text.includes(search);
-const matchesType=type==="all" || job.dataset.type===type;
+let jobs = [];
 
-if(matchesSearch && matchesType){
-job.style.display="block";
-visible++;
-}else{
-job.style.display="none";
+function displayJobs() {
+  const search = searchInput.value.toLowerCase();
+  const type = typeFilter.value;
+
+  const filtered = jobs.filter(job => {
+    const text = Object.values(job).join(" ").toLowerCase();
+    const matchesSearch = text.includes(search);
+    const matchesType =
+      type === "all" ||
+      String(job.Category || "").trim() === type;
+
+    return matchesSearch && matchesType;
+  });
+
+  jobList.innerHTML = "";
+
+  filtered.forEach(job => {
+    const card = document.createElement("div");
+    card.className = "job";
+
+    card.innerHTML = `
+      <h3>${job["Job Title"] || "Untitled Opportunity"}</h3>
+      <p><strong>Employer:</strong> ${job.Employer || "Not specified"}</p>
+      <p><strong>Location:</strong> ${job.Location || "Kenya"}</p>
+      <p><strong>Deadline:</strong> ${job.Deadline || "Not specified"}</p>
+      <span class="tag">${job.Category || "Job"}</span>
+      ${
+        job["Apply Link"]
+          ? `<a href="${job["Apply Link"]}" target="_blank" class="apply">Apply Now</a>`
+          : ""
+      }
+    `;
+
+    jobList.appendChild(card);
+  });
+
+  noResults.style.display = filtered.length === 0 ? "block" : "none";
 }
-});
 
-noResults.style.display=visible===0?"block":"none";
-}
+fetch(API_URL)
+  .then(response => response.json())
+  .then(data => {
+    jobs = data.filter(job => job["Job Title"]);
+    displayJobs();
+  })
+  .catch(error => {
+    console.error("Error loading jobs:", error);
+    noResults.textContent = "Unable to load opportunities.";
+    noResults.style.display = "block";
+  });
 
-searchInput.addEventListener("input",filterJobs);
-typeFilter.addEventListener("change",filterJobs);
+searchInput.addEventListener("input", displayJobs);
+typeFilter.addEventListener("change", displayJobs);
 </script>
-
 </body>
 </html>
