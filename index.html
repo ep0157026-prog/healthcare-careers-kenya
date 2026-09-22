@@ -142,133 +142,48 @@ footer {
 </footer>
 
 <script>
-
-const API_URL =
-"https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0DQZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0DQZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
 
 const searchInput = document.getElementById("searchInput");
 const typeFilter = document.getElementById("typeFilter");
 const jobList = document.getElementById("jobList");
 const noResults = document.getElementById("noResults");
 
-let jobs = [];
-
-function displayJobs() {
-
-  const search = searchInput.value.toLowerCase();
-  const type = typeFilter.value;
-
-  const filtered = jobs.filter(job => {
-
-    const text = Object.values(job)
-      .join(" ")
-      .toLowerCase();
-
-    const matchesSearch = text.includes(search);
-
-    const matchesType =
-      type === "all" ||
-      String(job.Category || "").trim() === type;
-
-    return matchesSearch && matchesType;
-
-  });
-
-  jobList.innerHTML = "";
-
-  filtered.forEach(job => {
-
-    const card = document.createElement("div");
-
-    card.className = "job";
-
-    card.innerHTML = `
-
-      <h3>
-        ${job["Job Title"] || "Untitled Opportunity"}
-      </h3>
-
-      <p>
-        <strong>Employer:</strong>
-        ${job.Employer || "Not specified"}
-      </p>
-
-      <p>
-        <strong>Location:</strong>
-        ${job.Location || "Kenya"}
-      </p>
-
-      <p>
-        <strong>Deadline:</strong>
-        ${job.Deadline || "Not specified"}
-      </p>
-
-      <span class="tag">
-        ${job.Category || "Opportunity"}
-      </span>
-
-      ${
-        job["Apply Link"]
-        ?
-        `<br>
-         <a
-           href="${job["Apply Link"]}"
-           target="_blank"
-           class="apply">
-           Apply Now
-         </a>`
-        :
-        ""
-      }
-
-    `;
-
-    jobList.appendChild(card);
-
-  });
-
-  noResults.style.display =
-    filtered.length === 0 ? "block" : "none";
-}
-
-
 fetch(API_URL)
-
   .then(response => response.json())
-
   .then(data => {
 
-    console.log("Jobs loaded:", data);
+    console.log("DATA FROM SHEET:", data);
 
-    jobs = data;
+    jobList.innerHTML = "";
 
-    displayJobs();
+    data.forEach(job => {
+
+      if (!job["Job Title"]) return;
+
+      const card = document.createElement("div");
+      card.className = "job";
+
+      card.innerHTML = `
+        <h3>${job["Job Title"]}</h3>
+        <p><strong>Employer:</strong> ${job["Employer"] || ""}</p>
+        <p><strong>Location:</strong> ${job["Location"] || ""}</p>
+        <p><strong>Category:</strong> ${job["Category"] || ""}</p>
+        <p><strong>Deadline:</strong> ${job["Deadline"] || ""}</p>
+        ${
+          job["Apply Link"]
+            ? `<a href="${job["Apply Link"]}" target="_blank" class="apply">Apply Now</a>`
+            : ""
+        }
+      `;
+
+      jobList.appendChild(card);
+    });
 
   })
-
   .catch(error => {
-
-    console.error("Error loading jobs:", error);
-
-    noResults.textContent =
-      "Unable to load opportunities.";
-
+    console.error("FAILED:", error);
+    noResults.textContent = "Unable to load opportunities.";
     noResults.style.display = "block";
-
   });
-
-
-searchInput.addEventListener(
-  "input",
-  displayJobs
-);
-
-typeFilter.addEventListener(
-  "change",
-  displayJobs
-);
-
 </script>
-
-</body>
-</html>
