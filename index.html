@@ -140,35 +140,57 @@ footer {
 <footer>
   <p>© 2026 Healthcare Careers Kenya</p>
 </footer>
-
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0DQZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
+
+const jobList = document.getElementById("jobList");
 
 fetch(API_URL)
   .then(response => response.json())
   .then(data => {
 
-    const jobList = document.getElementById("jobList");
+    jobList.innerHTML = "";
 
     data.forEach(job => {
 
-      const card = document.createElement("div");
+      const values = Object.values(job);
 
+      const title = values[0] || "Untitled Opportunity";
+      const employer = values[1] || "Not specified";
+      const location = values[2] || "Kenya";
+      const category = values[3] || "Opportunity";
+      const deadline = values[4] || "Not specified";
+      const applyLink = values[5] || "";
+
+      const card = document.createElement("div");
       card.className = "job";
 
-      card.innerHTML =
-        "<h3>" + (job["Job Title"] || "Untitled") + "</h3>" +
-        "<p><strong>Employer:</strong> " + (job["Employer"] || "") + "</p>" +
-        "<p><strong>Location:</strong> " + (job["Location"] || "") + "</p>" +
-        "<p><strong>Category:</strong> " + (job["Category"] || "") + "</p>" +
-        "<p><strong>Deadline:</strong> " + (job["Deadline"] || "") + "</p>";
+      card.innerHTML = `
+        <h3>${title}</h3>
+
+        <p><strong>Employer:</strong> ${employer}</p>
+
+        <p><strong>Location:</strong> ${location}</p>
+
+        <p><strong>Category:</strong> ${category}</p>
+
+        <p><strong>Deadline:</strong> ${deadline}</p>
+
+        ${
+          applyLink
+          ? `<a href="${applyLink}" target="_blank" class="apply">
+               Apply Now
+             </a>`
+          : ""
+        }
+      `;
 
       jobList.appendChild(card);
-
     });
 
   })
   .catch(error => {
-    console.log("ERROR:", error);
+    console.error("Error loading jobs:", error);
+    jobList.innerHTML = "<p>Unable to load opportunities.</p>";
   });
 </script>
