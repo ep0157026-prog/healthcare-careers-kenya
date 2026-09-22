@@ -3,145 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Healthcare Careers Kenya - jobs, internships, attachments and locum opportunities for healthcare professionals.">
+
+<meta name="description" content="Healthcare Careers Kenya — jobs, internships, attachments, locum opportunities and professional opportunities for healthcare workers.">
+
 <title>Healthcare Careers Kenya</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-font-family:Arial,sans-serif;
-background:#f5f7fa;
-color:#17202a;
-line-height:1.6
+* {
+  box-sizing: border-box;
 }
-header{
-background:#0b6b57;
-color:white;
-padding:18px 5%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-gap:10px
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+  color: #222;
 }
-.logo{font-size:22px;font-weight:bold}
-nav a{
-color:white;
-text-decoration:none;
-margin-left:18px;
-font-size:14px
+
+header {
+  background: #0b5ed7;
+  color: white;
+  padding: 25px 15px;
+  text-align: center;
 }
-.hero{
-background:white;
-text-align:center;
-padding:45px 20px
+
+header h1 {
+  margin: 0 0 8px;
 }
-.hero h1{font-size:34px;margin-bottom:10px}
-.hero p{color:#555;margin-bottom:25px}
-.search{
-max-width:750px;
-margin:auto;
-display:flex;
-gap:10px;
-flex-wrap:wrap
+
+header p {
+  margin: 0;
 }
-.search input,.search select{
-padding:14px;
-border:1px solid #ddd;
-border-radius:8px;
-font-size:15px
+
+.container {
+  max-width: 1000px;
+  margin: 25px auto;
+  padding: 0 15px;
 }
-.search input{flex:1;min-width:220px}
-.search select{min-width:150px}
-.container{
-width:90%;
-max-width:1100px;
-margin:30px auto
+
+.search-area {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
 }
-.section-title{
-margin-bottom:18px;
-font-size:25px
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
 }
-.jobs{
-display:grid;
-gap:15px
+
+.job {
+  background: white;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-.job{
-background:white;
-padding:20px;
-border-radius:10px;
-box-shadow:0 2px 8px rgba(0,0,0,.06);
-border:1px solid #eee
+
+.job h3 {
+  margin-top: 0;
 }
-.job h3{color:#0b6b57;margin-bottom:5px}
-.job p{margin:4px 0;color:#555}
-.tag{
-display:inline-block;
-background:#e8f5f1;
-color:#0b6b57;
-padding:4px 9px;
-border-radius:15px;
-font-size:12px;
-margin:8px 5px 8px 0
+
+.tag {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #e8f1ff;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-top: 5px;
 }
-.apply{
-display:inline-block;
-background:#0b6b57;
-color:white;
-padding:9px 15px;
-border-radius:6px;
-text-decoration:none;
-margin-top:10px
+
+.apply {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: #198754;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
 }
-.categories{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:15px
-}
-.category{
-background:white;
-padding:20px;
-text-align:center;
-border-radius:10px;
-border:1px solid #eee
-}
-.employer{
-background:#0b6b57;
-color:white;
-padding:35px 25px;
-border-radius:12px;
-text-align:center
-}
-.employer h2{margin-bottom:10px}
-.button{
-display:inline-block;
-background:white;
-color:#0b6b57;
-padding:11px 20px;
-border-radius:7px;
-text-decoration:none;
-font-weight:bold;
-margin-top:15px
-}
-footer{
-background:#17202a;
-color:white;
-text-align:center;
-padding:25px;
-margin-top:40px;
-font-size:14px
-}
-.empty{
-background:white;
-padding:25px;
-text-align:center;
-border-radius:10px;
-color:#666
-}
-@media(max-width:600px){
-.hero h1{font-size:27px}
-nav{width:100%}
-nav a{margin:0 10px 0 0}
+
+footer {
+  text-align: center;
+  padding: 30px 15px;
+  margin-top: 40px;
+  background: #222;
+  color: white;
 }
 </style>
 </head>
@@ -149,105 +103,48 @@ nav a{margin:0 10px 0 0}
 <body>
 
 <header>
-<div class="logo">Healthcare Careers Kenya</div>
-<nav>
-<a href="#jobs">Jobs</a>
-<a href="#categories">Categories</a>
-<a href="#employers">Employers</a>
-</nav>
+  <h1>Healthcare Careers Kenya</h1>
+  <p>Jobs, internships, attachments and locum opportunities for healthcare professionals</p>
 </header>
 
-<section class="hero">
-<h1>Healthcare Careers in Kenya</h1>
-<p>Find healthcare jobs, internships, attachments and locum opportunities.</p>
+<div class="container">
 
-<div class="search">
-<input type="text" id="searchInput" placeholder="Search jobs, professions or employers...">
+  <div class="search-area">
+    <label for="searchInput"><strong>Search opportunities</strong></label>
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search job title, employer, location..."
+    >
 
-<select id="typeFilter">
-<option value="all">All opportunities</option>
-<option value="Job">Jobs</option>
-<option value="Internship">Internships</option>
-<option value="Attachment">Attachments</option>
-<option value="Locum">Locum</option>
-</select>
-</div>
-</section>
+    <label for="typeFilter"><strong>Opportunity type</strong></label>
+    <select id="typeFilter">
+      <option value="all">All Opportunities</option>
+      <option value="Job">Jobs</option>
+      <option value="Internship">Internships</option>
+      <option value="Attachment">Attachments</option>
+      <option value="Locum">Locum</option>
+    </select>
+  </div>
 
-<section class="container" id="jobs">
-<h2 class="section-title">Latest Opportunities</h2>
+  <h2>Latest Opportunities</h2>
 
-<div class="jobs" id="jobList">
+  <div id="jobList"></div>
 
-<div class="job" data-type="Job">
-<h3>Medical Records Officer</h3>
-<p><strong>Employer:</strong> Healthcare Careers Kenya</p>
-<p><strong>Location:</strong> Kenya</p>
-<span class="tag">Job</span>
-<a href="#" class="apply">View Opportunity</a>
-</div>
-
-<div class="job" data-type="Internship">
-<h3>Health Records Internship</h3>
-<p><strong>Employer:</strong> Healthcare Facility</p>
-<p><strong>Location:</strong> Nairobi</p>
-<span class="tag">Internship</span>
-<a href="#" class="apply">View Opportunity</a>
-</div>
-
-<div class="job" data-type="Job">
-<h3>Registered Nurse</h3>
-<p><strong>Employer:</strong> Healthcare Facility</p>
-<p><strong>Location:</strong> Nairobi</p>
-<span class="tag">Job</span>
-<a href="#" class="apply">View Opportunity</a>
-</div>
-
-<div class="job" data-type="Locum">
-<h3>Clinical Officer - Locum</h3>
-<p><strong>Employer:</strong> Medical Centre</p>
-<p><strong>Location:</strong> Kenya</p>
-<span class="tag">Locum</span>
-<a href="#" class="apply">View Opportunity</a>
-</div>
+  <p id="noResults" style="display:none;">
+    No opportunities found.
+  </p>
 
 </div>
-
-<div class="empty" id="noResults" style="display:none">
-No opportunities found.
-</div>
-</section>
-
-<section class="container" id="categories">
-<h2 class="section-title">Browse by Category</h2>
-
-<div class="categories">
-<div class="category">🩺 Clinical Jobs</div>
-<div class="category">📋 Health Records</div>
-<div class="category">💊 Pharmacy</div>
-<div class="category">🧪 Laboratory</div>
-<div class="category">👩‍⚕️ Nursing</div>
-<div class="category">🏥 Administration</div>
-</div>
-</section>
-
-<section class="container" id="employers">
-<div class="employer">
-<h2>Are you an employer?</h2>
-<p>Reach qualified healthcare professionals across Kenya.</p>
-<a href="mailto:healthcarecareerskenya@gmail.com" class="button">
-Post a Job
-</a>
-</div>
-</section>
 
 <footer>
-<p>© 2026 Healthcare Careers Kenya</p>
-<p>Connecting healthcare professionals with opportunities.</p>
+  <p>© 2026 Healthcare Careers Kenya</p>
 </footer>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0DQZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0DQZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
 
 const searchInput = document.getElementById("searchInput");
 const typeFilter = document.getElementById("typeFilter");
@@ -257,58 +154,121 @@ const noResults = document.getElementById("noResults");
 let jobs = [];
 
 function displayJobs() {
+
   const search = searchInput.value.toLowerCase();
   const type = typeFilter.value;
 
   const filtered = jobs.filter(job => {
-    const text = Object.values(job).join(" ").toLowerCase();
+
+    const text = Object.values(job)
+      .join(" ")
+      .toLowerCase();
+
     const matchesSearch = text.includes(search);
+
     const matchesType =
       type === "all" ||
       String(job.Category || "").trim() === type;
 
     return matchesSearch && matchesType;
+
   });
 
   jobList.innerHTML = "";
 
   filtered.forEach(job => {
+
     const card = document.createElement("div");
+
     card.className = "job";
 
     card.innerHTML = `
-      <h3>${job["Job Title"] || "Untitled Opportunity"}</h3>
-      <p><strong>Employer:</strong> ${job.Employer || "Not specified"}</p>
-      <p><strong>Location:</strong> ${job.Location || "Kenya"}</p>
-      <p><strong>Deadline:</strong> ${job.Deadline || "Not specified"}</p>
-      <span class="tag">${job.Category || "Job"}</span>
+
+      <h3>
+        ${job["Job Title"] || "Untitled Opportunity"}
+      </h3>
+
+      <p>
+        <strong>Employer:</strong>
+        ${job.Employer || "Not specified"}
+      </p>
+
+      <p>
+        <strong>Location:</strong>
+        ${job.Location || "Kenya"}
+      </p>
+
+      <p>
+        <strong>Deadline:</strong>
+        ${job.Deadline || "Not specified"}
+      </p>
+
+      <span class="tag">
+        ${job.Category || "Opportunity"}
+      </span>
+
       ${
         job["Apply Link"]
-          ? `<a href="${job["Apply Link"]}" target="_blank" class="apply">Apply Now</a>`
-          : ""
+        ?
+        `<br>
+         <a
+           href="${job["Apply Link"]}"
+           target="_blank"
+           class="apply">
+           Apply Now
+         </a>`
+        :
+        ""
       }
+
     `;
 
     jobList.appendChild(card);
+
   });
 
-  noResults.style.display = filtered.length === 0 ? "block" : "none";
+  noResults.style.display =
+    filtered.length === 0 ? "block" : "none";
 }
 
+
 fetch(API_URL)
+
   .then(response => response.json())
+
   .then(data => {
+
+    console.log("Jobs loaded:", data);
+
     jobs = data.filter(job => job["Job Title"]);
+
     displayJobs();
+
   })
+
   .catch(error => {
+
     console.error("Error loading jobs:", error);
-    noResults.textContent = "Unable to load opportunities.";
+
+    noResults.textContent =
+      "Unable to load opportunities.";
+
     noResults.style.display = "block";
+
   });
 
-searchInput.addEventListener("input", displayJobs);
-typeFilter.addEventListener("change", displayJobs);
+
+searchInput.addEventListener(
+  "input",
+  displayJobs
+);
+
+typeFilter.addEventListener(
+  "change",
+  displayJobs
+);
+
 </script>
+
 </body>
 </html>
