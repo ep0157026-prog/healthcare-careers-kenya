@@ -3,75 +3,55 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Healthcare Careers Kenya — jobs, internships, attachments, locum opportunities and professional opportunities for healthcare workers.">
+
 <title>Healthcare Careers Kenya</title>
 
+<meta name="description" content="Healthcare jobs, internships, attachments and locum opportunities in Kenya.">
+
 <style>
-:root{
-  --primary:#0b5ed7;
-  --dark:#123;
-  --light:#f5f7fa;
-  --border:#ddd;
-}
-
-*{
-  box-sizing:border-box;
-}
-
 body{
   margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--light);
+  font-family:Arial,sans-serif;
+  background:#f5f7fa;
   color:#222;
 }
 
 header{
-  background:var(--primary);
+  background:#0b5ed7;
   color:white;
-  padding:30px 20px;
   text-align:center;
+  padding:30px 15px;
 }
 
 header h1{
   margin:0 0 10px;
-  font-size:32px;
-}
-
-header p{
-  margin:0;
-  font-size:16px;
 }
 
 .container{
-  max-width:1000px;
+  max-width:900px;
   margin:25px auto;
   padding:0 15px;
 }
 
 .actions{
   text-align:center;
-  margin-bottom:25px;
+  margin-bottom:20px;
 }
 
 .post-vacancy{
   display:inline-block;
-  padding:13px 24px;
   background:#198754;
   color:white;
-  text-decoration:none;
+  padding:13px 22px;
   border-radius:7px;
+  text-decoration:none;
   font-weight:bold;
-}
-
-.post-vacancy:hover{
-  opacity:.9;
 }
 
 .filters{
   background:white;
-  padding:18px;
+  padding:15px;
   border-radius:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
   margin-bottom:20px;
 }
 
@@ -80,9 +60,9 @@ header p{
   width:100%;
   padding:12px;
   margin-bottom:10px;
-  border:1px solid var(--border);
+  border:1px solid #ddd;
   border-radius:6px;
-  font-size:15px;
+  box-sizing:border-box;
 }
 
 .job{
@@ -94,52 +74,270 @@ header p{
 }
 
 .job h3{
-  margin-top:0;
-  color:var(--primary);
+  color:#0b5ed7;
 }
 
 .job p{
-  margin:8px 0;
+  line-height:1.5;
 }
 
-.description{
-  margin-top:15px;
-  line-height:1.6;
-  white-space:pre-line;
-}
-
-.details{
-  margin-top:15px;
-}
-
-.details-btn,
+button,
 .apply{
   display:inline-block;
-  margin-top:10px;
-  margin-right:8px;
-  padding:10px 18px;
-  color:white;
-  text-decoration:none;
+  padding:10px 16px;
+  margin-top:8px;
+  margin-right:6px;
+  border:0;
   border-radius:6px;
+  color:white;
   font-weight:bold;
-  border:none;
   cursor:pointer;
-  font-size:14px;
+  text-decoration:none;
 }
 
-.details-btn{
+button{
   background:#6c757d;
 }
 
 .apply{
-  background:var(--primary);
+  background:#0b5ed7;
 }
 
-.details-btn:hover,
-.apply:hover{
-  opacity:.9;
-}
-
-.full-description{
+.description{
   display:none;
+  border-top:1px solid #ddd;
   margin-top:15px;
+  padding-top:15px;
+  white-space:pre-line;
+}
+
+footer{
+  margin-top:40px;
+  padding:25px;
+  text-align:center;
+  background:#123;
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Healthcare Careers Kenya</h1>
+<p>Jobs, internships, attachments, locum opportunities and more.</p>
+</header>
+
+<div class="container">
+
+<div class="actions">
+<a
+class="post-vacancy"
+href="https://docs.google.com/forms/d/e/1FAIpQLSfFn-fwpytlIsKYqZRoDTt5scl4zy-LJfSMhZXvUPQmws6DZg/viewform?usp=sharing&ouid=115243584880251400944"
+target="_blank">
+Post a Vacancy
+</a>
+</div>
+
+<div class="filters">
+
+<input
+id="searchInput"
+type="text"
+placeholder="Search jobs by title, employer or location">
+
+<select id="typeFilter">
+<option value="all">All Opportunities</option>
+<option value="Job">Jobs</option>
+<option value="Internship">Internships</option>
+<option value="Attachment">Attachments</option>
+<option value="Locum">Locum</option>
+<option value="Volunteer">Volunteer</option>
+<option value="Training">Training</option>
+<option value="Other">Other</option>
+</select>
+
+</div>
+
+<div id="jobList">
+<p>Loading opportunities...</p>
+</div>
+
+</div>
+
+<footer>
+© 2026 Healthcare Careers Kenya
+</footer>
+
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0QDZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
+
+const jobList =
+document.getElementById("jobList");
+
+const searchInput =
+document.getElementById("searchInput");
+
+const typeFilter =
+document.getElementById("typeFilter");
+
+let jobs=[];
+
+function displayJobs(){
+
+const search =
+searchInput.value.toLowerCase().trim();
+
+const selectedType =
+typeFilter.value;
+
+jobList.innerHTML="";
+
+const filteredJobs=jobs.filter(job=>{
+
+const values=Object.values(job);
+
+const title=String(values[0]||"");
+const employer=String(values[1]||"");
+const location=String(values[2]||"");
+const category=String(values[3]||"");
+
+const searchable=
+(title+" "+employer+" "+location)
+.toLowerCase();
+
+return searchable.includes(search) &&
+(
+selectedType==="all" ||
+category.toLowerCase()===
+selectedType.toLowerCase()
+);
+
+});
+
+if(filteredJobs.length===0){
+
+jobList.innerHTML=
+"<p>No opportunities found.</p>";
+
+return;
+}
+
+filteredJobs.forEach((job,index)=>{
+
+const values=Object.values(job);
+
+const title=values[0]||"Untitled Opportunity";
+const employer=values[1]||"Not specified";
+const location=values[2]||"Kenya";
+const category=values[3]||"Opportunity";
+const deadline=values[4]||"Not specified";
+const applyLink=values[5]||"";
+const description=values[6]||"No description provided.";
+
+const card=document.createElement("div");
+
+card.className="job";
+
+card.innerHTML=`
+
+<h3>${title}</h3>
+
+<p><strong>Employer:</strong> ${employer}</p>
+
+<p><strong>Location:</strong> ${location}</p>
+
+<p><strong>Category:</strong> ${category}</p>
+
+<p><strong>Deadline:</strong> ${deadline}</p>
+
+<button onclick="toggleDescription(${index})">
+View Details
+</button>
+
+${
+applyLink
+?
+`<a class="apply"
+href="${applyLink}"
+target="_blank">
+Apply Now
+</a>`
+:
+""
+}
+
+<div
+id="description-${index}"
+class="description">
+
+<strong>Opportunity Details</strong>
+
+<p>${description}</p>
+
+</div>
+
+`;
+
+jobList.appendChild(card);
+
+});
+
+}
+
+function toggleDescription(index){
+
+const box=
+document.getElementById(
+"description-"+index
+);
+
+if(box.style.display==="block"){
+
+box.style.display="none";
+
+}else{
+
+box.style.display="block";
+
+}
+
+}
+
+fetch(API_URL)
+
+.then(response=>response.json())
+
+.then(data=>{
+
+jobs=data;
+
+displayJobs();
+
+})
+
+.catch(error=>{
+
+console.error(error);
+
+jobList.innerHTML=
+"<p>Unable to load opportunities.</p>";
+
+});
+
+searchInput.addEventListener(
+"input",
+displayJobs
+);
+
+typeFilter.addEventListener(
+"change",
+displayJobs
+);
+
+</script>
+
+</body>
+</html>
