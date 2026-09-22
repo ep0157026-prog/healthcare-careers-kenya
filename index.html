@@ -144,46 +144,31 @@ footer {
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0DQZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
 
-const searchInput = document.getElementById("searchInput");
-const typeFilter = document.getElementById("typeFilter");
-const jobList = document.getElementById("jobList");
-const noResults = document.getElementById("noResults");
-
 fetch(API_URL)
   .then(response => response.json())
   .then(data => {
 
-    console.log("DATA FROM SHEET:", data);
-
-    jobList.innerHTML = "";
+    const jobList = document.getElementById("jobList");
 
     data.forEach(job => {
 
-      if (!job["Job Title"]) return;
-
       const card = document.createElement("div");
+
       card.className = "job";
 
-      card.innerHTML = `
-        <h3>${job["Job Title"]}</h3>
-        <p><strong>Employer:</strong> ${job["Employer"] || ""}</p>
-        <p><strong>Location:</strong> ${job["Location"] || ""}</p>
-        <p><strong>Category:</strong> ${job["Category"] || ""}</p>
-        <p><strong>Deadline:</strong> ${job["Deadline"] || ""}</p>
-        ${
-          job["Apply Link"]
-            ? `<a href="${job["Apply Link"]}" target="_blank" class="apply">Apply Now</a>`
-            : ""
-        }
-      `;
+      card.innerHTML =
+        "<h3>" + (job["Job Title"] || "Untitled") + "</h3>" +
+        "<p><strong>Employer:</strong> " + (job["Employer"] || "") + "</p>" +
+        "<p><strong>Location:</strong> " + (job["Location"] || "") + "</p>" +
+        "<p><strong>Category:</strong> " + (job["Category"] || "") + "</p>" +
+        "<p><strong>Deadline:</strong> " + (job["Deadline"] || "") + "</p>";
 
       jobList.appendChild(card);
+
     });
 
   })
   .catch(error => {
-    console.error("FAILED:", error);
-    noResults.textContent = "Unable to load opportunities.";
-    noResults.style.display = "block";
+    console.log("ERROR:", error);
   });
 </script>
