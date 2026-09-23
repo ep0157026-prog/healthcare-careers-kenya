@@ -294,6 +294,9 @@ function displayJobs(){
 
   jobList.innerHTML = "";
 
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
   const filteredJobs = jobs.filter(job => {
 
     const values = Object.values(job);
@@ -310,6 +313,9 @@ function displayJobs(){
     const category =
       String(values[3] || "");
 
+    const deadline =
+      values[4];
+
     const searchableText =
       (
         title + " " +
@@ -324,7 +330,31 @@ function displayJobs(){
       selectedType === "all" ||
       category.toLowerCase().trim() === selectedType;
 
-    return matchesSearch && matchesCategory;
+    /* Hide expired vacancies */
+
+    let isExpired = false;
+
+    if(deadline){
+
+      const deadlineDate =
+        new Date(deadline);
+
+      if(!isNaN(deadlineDate.getTime())){
+
+        deadlineDate.setHours(0,0,0,0);
+
+        isExpired =
+          deadlineDate < today;
+
+      }
+
+    }
+
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      !isExpired
+    );
 
   });
 
@@ -332,7 +362,7 @@ function displayJobs(){
   if(filteredJobs.length === 0){
 
     jobList.innerHTML =
-      "<p>No opportunities found.</p>";
+      "<p>No current opportunities found.</p>";
 
     return;
 
@@ -449,126 +479,6 @@ function displayJobs(){
   });
 
 }
-
-
-function toggleDescription(id,button){
-
-  const description =
-    document.getElementById(id);
-
-  if(description.classList.contains("show")){
-
-    description.classList.remove("show");
-
-    button.textContent =
-      "View Details";
-
-  }else{
-
-    description.classList.add("show");
-
-    button.textContent =
-      "Hide Details";
-
-  }
-
-}
-
-
-function escapeHTML(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-function escapeAttribute(value){
-
-  return String(value)
-    .replace(/"/g,"%22")
-    .replace(/'/g,"%27")
-    .trim();
-
-}
-
-
-function formatDate(value){
-
-  if(!value){
-    return "Not specified";
-  }
-
-  const date = new Date(value);
-
-  if(!isNaN(date.getTime())){
-
-    return date.toLocaleDateString(
-      "en-GB",
-      {
-        day:"2-digit",
-        month:"long",
-        year:"numeric"
-      }
-    );
-
-  }
-
-  return escapeHTML(value);
-
-}
-
-
-/* LOAD VACANCIES FROM GOOGLE SHEETS */
-
-fetch(API_URL)
-
-  .then(response => {
-
-    if(!response.ok){
-      throw new Error("API request failed");
-    }
-
-    return response.json();
-
-  })
-
-  .then(data => {
-
-    jobs = Array.isArray(data)
-      ? data
-      : [];
-
-    displayJobs();
-
-  })
-
-  .catch(error => {
-
-    console.error(
-      "Error loading jobs:",
-      error
-    );
-
-    jobList.innerHTML =
-      "<p>Unable to load opportunities.</p>";
-
-  });
-
-
-searchInput.addEventListener(
-  "input",
-  displayJobs
-);
-
-typeFilter.addEventListener(
-  "change",
-  displayJobs
-);
 
 </script>
 
