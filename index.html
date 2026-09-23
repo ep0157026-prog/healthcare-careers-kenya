@@ -167,6 +167,24 @@ header{
   color:#666;
   line-height:1.5;
 }
+  .category-label{
+  display:inline-block;
+  padding:4px 10px;
+  background:#eef2ff;
+  color:var(--primary);
+  border-radius:20px;
+  font-size:13px;
+  font-weight:bold;
+}
+  .deadline-label{
+  display:inline-block;
+  padding:4px 10px;
+  background:#f8f9fa;
+  color:#444;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:bold;
+}
 #jobCount{
   font-weight:bold;
   font-size:18px;
@@ -569,12 +587,15 @@ jobCount.textContent =
 
       <p>
         <strong>Category:</strong>
+        <span class="category-label"
         ${escapeHTML(category)}
+        </span>
       </p>
 
       <p>
         <strong>Deadline:</strong>
         ${formatDate(deadline)}
+        </span>
       </p>
 
       <div class="buttons">
