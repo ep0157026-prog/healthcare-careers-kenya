@@ -1,14 +1,25 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="description" content="Healthcare Careers Kenya — jobs, internships, attachments, locum opportunities and professional opportunities for healthcare workers.">
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1"
+>
+
+<meta
+  name="description"
+  content="Healthcare Careers Kenya — jobs, internships, attachments, locum opportunities and professional opportunities for healthcare workers."
+>
 
 <title>Healthcare Careers Kenya</title>
 
+
 <style>
+
 :root{
   --primary:#0b5ed7;
   --dark:#123;
@@ -215,71 +226,126 @@ footer{
   }
 
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header>
-  <h1>Healthcare Careers Kenya</h1>
-  <p>Jobs, internships, attachments, locum opportunities and more for healthcare professionals.</p>
+
+<h1>Healthcare Careers Kenya</h1>
+
+<p>
+Jobs, internships, attachments, locum opportunities and more for healthcare professionals.
+</p>
+
 </header>
+
 
 <div class="container">
 
-  <div class="actions">
-    <a
-      href="https://docs.google.com/forms/d/e/1FAIpQLSfFn-fwpytlIsKYqZRoDTt5scl4zy-LJfSMhZXvUPQmws6DZg/viewform?usp=sharing&ouid=115243584880251400944"
-      target="_blank"
-      rel="noopener"
-      class="post-vacancy">
-      Post a Vacancy
-    </a>
-  </div>
 
-  <div class="filters">
+<div class="actions">
 
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Search jobs by title, employer or location">
-
-    <select id="typeFilter">
-      <option value="all">All Opportunities</option>
-      <option value="Job">Jobs</option>
-      <option value="Internship">Internships</option>
-      <option value="Attachment">Attachments</option>
-      <option value="Locum">Locum</option>
-      <option value="Volunteer">Volunteer</option>
-      <option value="Training">Training</option>
-      <option value="Other">Other</option>
-    </select>
-
-  </div>
-
-  <div id="jobList">
-    <p>Loading opportunities...</p>
-  </div>
+<a
+  href="https://docs.google.com/forms/d/e/1FAIpQLSfFn-fwpytlIsKYqZRoDTt5scl4zy-LJfSMhZXvUPQmws6DZg/viewform?usp=sharing&ouid=115243584880251400944"
+  target="_blank"
+  rel="noopener"
+  class="post-vacancy"
+>
+  Post a Vacancy
+</a>
 
 </div>
 
+
+<div class="filters">
+
+<input
+  type="text"
+  id="searchInput"
+  placeholder="Search jobs, employers or locations..."
+>
+
+<select id="typeFilter">
+
+<option value="all">
+All Opportunities
+</option>
+
+<option value="job">
+Jobs
+</option>
+
+<option value="internship">
+Internships
+</option>
+
+<option value="attachment">
+Attachments
+</option>
+
+<option value="locum">
+Locum
+</option>
+
+<option value="volunteer">
+Volunteer
+</option>
+
+<option value="training">
+Training
+</option>
+
+<option value="other">
+Other
+</option>
+
+</select>
+
+</div>
+
+
+<div id="jobList">
+
+<p>Loading opportunities...</p>
+
+</div>
+
+
+</div>
+
+
 <footer>
-  <p>© 2026 Healthcare Careers Kenya</p>
+
+Healthcare Careers Kenya
+
+<br><br>
+
+Connecting healthcare professionals with opportunities across Kenya.
+
 </footer>
+
 
 <script>
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0DQZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
+"https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0QDZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
 
-const jobList =
-document.getElementById("jobList");
 
 const searchInput =
 document.getElementById("searchInput");
 
 const typeFilter =
 document.getElementById("typeFilter");
+
+const jobList =
+document.getElementById("jobList");
+
 
 let jobs = [];
 
@@ -293,9 +359,6 @@ function displayJobs(){
     typeFilter.value.toLowerCase().trim();
 
   jobList.innerHTML = "";
-
-  const today = new Date();
-  today.setHours(0,0,0,0);
 
   const filteredJobs = jobs.filter(job => {
 
@@ -313,9 +376,6 @@ function displayJobs(){
     const category =
       String(values[3] || "");
 
-    const deadline =
-      values[4];
-
     const searchableText =
       (
         title + " " +
@@ -330,31 +390,7 @@ function displayJobs(){
       selectedType === "all" ||
       category.toLowerCase().trim() === selectedType;
 
-    /* Hide expired vacancies */
-
-    let isExpired = false;
-
-    if(deadline){
-
-      const deadlineDate =
-        new Date(deadline);
-
-      if(!isNaN(deadlineDate.getTime())){
-
-        deadlineDate.setHours(0,0,0,0);
-
-        isExpired =
-          deadlineDate < today;
-
-      }
-
-    }
-
-    return (
-      matchesSearch &&
-      matchesCategory &&
-      !isExpired
-    );
+    return matchesSearch && matchesCategory;
 
   });
 
@@ -362,7 +398,7 @@ function displayJobs(){
   if(filteredJobs.length === 0){
 
     jobList.innerHTML =
-      "<p>No current opportunities found.</p>";
+      "<p>No opportunities found.</p>";
 
     return;
 
@@ -394,93 +430,4 @@ function displayJobs(){
 
     const description =
       values[6] ||
-      "No additional details have been provided.";
-
-
-    const card =
-      document.createElement("div");
-
-    card.className = "job";
-
-
-    const descriptionId =
-      "description-" + index;
-
-
-    card.innerHTML = `
-
-      <h3>
-        ${escapeHTML(title)}
-      </h3>
-
-      <p>
-        <strong>Employer:</strong>
-        ${escapeHTML(employer)}
-      </p>
-
-      <p>
-        <strong>Location:</strong>
-        ${escapeHTML(location)}
-      </p>
-
-      <p>
-        <strong>Category:</strong>
-        ${escapeHTML(category)}
-      </p>
-
-      <p>
-        <strong>Deadline:</strong>
-        ${formatDate(deadline)}
-      </p>
-
-      <div class="buttons">
-
-        ${
-          applyLink
-          ?
-          `
-          <a
-            href="${escapeAttribute(applyLink)}"
-            target="_blank"
-            rel="noopener"
-            class="apply">
-            Apply Now
-          </a>
-          `
-          :
-          ""
-        }
-
-        <button
-          type="button"
-          class="details-button"
-          onclick="toggleDescription('${descriptionId}', this)">
-          View Details
-        </button>
-
-      </div>
-
-      <div
-        id="${descriptionId}"
-        class="full-description">
-
-        <strong>Opportunity Details</strong>
-
-        <br><br>
-
-        ${escapeHTML(description)}
-
-      </div>
-
-    `;
-
-    jobList.appendChild(card);
-
-  });
-
-}
-
-</script>
-
-</body>
-</html>
+      "No additional details have
