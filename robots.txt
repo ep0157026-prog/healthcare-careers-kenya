@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ep0157026-prog.github.io/healthcare-careers-kenya/sitemap.xml
