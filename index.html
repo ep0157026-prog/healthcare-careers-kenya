@@ -1,22 +1,12 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1"
->
-
-<meta
-  name="description"
-  content="Healthcare Careers Kenya — jobs, internships, attachments, locum opportunities and professional opportunities for healthcare workers."
->
+<meta name="description" content="Healthcare Careers Kenya — jobs, internships, attachments, locum opportunities and professional opportunities for healthcare workers.">
 
 <title>Healthcare Careers Kenya</title>
-
 
 <style>
 
@@ -228,12 +218,9 @@ footer{
 }
 
 </style>
-
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -245,9 +232,7 @@ Jobs, internships, attachments, locum opportunities and more for healthcare prof
 
 </header>
 
-
 <div class="container">
-
 
 <div class="actions">
 
@@ -262,7 +247,6 @@ Jobs, internships, attachments, locum opportunities and more for healthcare prof
 
 </div>
 
-
 <div class="filters">
 
 <input
@@ -273,42 +257,18 @@ Jobs, internships, attachments, locum opportunities and more for healthcare prof
 
 <select id="typeFilter">
 
-<option value="all">
-All Opportunities
-</option>
-
-<option value="job">
-Jobs
-</option>
-
-<option value="internship">
-Internships
-</option>
-
-<option value="attachment">
-Attachments
-</option>
-
-<option value="locum">
-Locum
-</option>
-
-<option value="volunteer">
-Volunteer
-</option>
-
-<option value="training">
-Training
-</option>
-
-<option value="other">
-Other
-</option>
+<option value="all">All Opportunities</option>
+<option value="job">Jobs</option>
+<option value="internship">Internships</option>
+<option value="attachment">Attachments</option>
+<option value="locum">Locum</option>
+<option value="volunteer">Volunteer</option>
+<option value="training">Training</option>
+<option value="other">Other</option>
 
 </select>
 
 </div>
-
 
 <div id="jobList">
 
@@ -316,9 +276,7 @@ Other
 
 </div>
 
-
 </div>
-
 
 <footer>
 
@@ -330,12 +288,10 @@ Connecting healthcare professionals with opportunities across Kenya.
 
 </footer>
 
-
 <script>
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0QDZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
-
 
 const searchInput =
 document.getElementById("searchInput");
@@ -346,9 +302,7 @@ document.getElementById("typeFilter");
 const jobList =
 document.getElementById("jobList");
 
-
 let jobs = [];
-
 
 function displayJobs(){
 
@@ -394,7 +348,6 @@ function displayJobs(){
 
   });
 
-
   if(filteredJobs.length === 0){
 
     jobList.innerHTML =
@@ -403,7 +356,6 @@ function displayJobs(){
     return;
 
   }
-
 
   filteredJobs.forEach((job,index) => {
 
@@ -430,4 +382,203 @@ function displayJobs(){
 
     const description =
       values[6] ||
-      "No additional details have
+      "No additional details have been provided.";
+
+    const card =
+      document.createElement("div");
+
+    card.className = "job";
+
+    const descriptionId =
+      "description-" + index;
+
+    card.innerHTML = `
+
+      <h3>
+        ${escapeHTML(title)}
+      </h3>
+
+      <p>
+        <strong>Employer:</strong>
+        ${escapeHTML(employer)}
+      </p>
+
+      <p>
+        <strong>Location:</strong>
+        ${escapeHTML(location)}
+      </p>
+
+      <p>
+        <strong>Category:</strong>
+        ${escapeHTML(category)}
+      </p>
+
+      <p>
+        <strong>Deadline:</strong>
+        ${formatDate(deadline)}
+      </p>
+
+      <div class="buttons">
+
+        ${
+          applyLink
+          ?
+          `
+          <a
+            href="${escapeAttribute(applyLink)}"
+            target="_blank"
+            rel="noopener"
+            class="apply">
+            Apply Now
+          </a>
+          `
+          :
+          ""
+        }
+
+        <button
+          type="button"
+          class="details-button"
+          onclick="toggleDescription('${descriptionId}', this)">
+          View Details
+        </button>
+
+      </div>
+
+      <div
+        id="${descriptionId}"
+        class="full-description">
+
+        <strong>Opportunity Details</strong>
+
+        <br><br>
+
+        ${escapeHTML(description)}
+
+      </div>
+
+    `;
+
+    jobList.appendChild(card);
+
+  });
+
+}
+
+function toggleDescription(id,button){
+
+  const description =
+    document.getElementById(id);
+
+  if(description.classList.contains("show")){
+
+    description.classList.remove("show");
+
+    button.textContent =
+      "View Details";
+
+  }else{
+
+    description.classList.add("show");
+
+    button.textContent =
+      "Hide Details";
+
+  }
+
+}
+
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+function escapeAttribute(value){
+
+  return String(value)
+    .replace(/"/g,"%22")
+    .replace(/'/g,"%27")
+    .trim();
+
+}
+
+function formatDate(value){
+
+  if(!value){
+    return "Not specified";
+  }
+
+  const date =
+    new Date(value);
+
+  if(!isNaN(date.getTime())){
+
+    return date.toLocaleDateString(
+      "en-GB",
+      {
+        day:"2-digit",
+        month:"long",
+        year:"numeric"
+      }
+    );
+
+  }
+
+  return escapeHTML(value);
+
+}
+
+fetch(API_URL)
+
+  .then(response => {
+
+    if(!response.ok){
+      throw new Error("API request failed");
+    }
+
+    return response.json();
+
+  })
+
+  .then(data => {
+
+    jobs = Array.isArray(data)
+      ? data
+      : [];
+
+    displayJobs();
+
+  })
+
+  .catch(error => {
+
+    console.error(
+      "Error loading jobs:",
+      error
+    );
+
+    jobList.innerHTML =
+      "<p>Unable to load opportunities.</p>";
+
+  });
+
+searchInput.addEventListener(
+  "input",
+  displayJobs
+);
+
+typeFilter.addEventListener(
+  "change",
+  displayJobs
+);
+
+</script>
+
+</body>
+</html>
