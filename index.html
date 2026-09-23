@@ -148,6 +148,25 @@ header{
 .filters select{
   margin-bottom:0;
 }
+  .empty-state{
+  background:white;
+  padding:30px 20px;
+  margin-top:10px;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+  text-align:center;
+}
+
+.empty-state h3{
+  margin:0 0 10px;
+  color:var(--dark);
+}
+
+.empty-state p{
+  margin:8px 0;
+  color:#666;
+  line-height:1.5;
+}
 #jobCount{
   font-weight:bold;
   font-size:18px;
@@ -417,7 +436,12 @@ const jobCount =
   const selectedType =
     typeFilter.value.toLowerCase().trim();
 
-  jobList.innerHTML = "";
+ jobList.innerHTML =
+  "<div class=\"empty-state\">" +
+  "<h3>No opportunities available right now</h3>" +
+  "<p>New healthcare opportunities will appear here as they are verified and published.</p>" +
+  "<p>Employers can use the <strong>Post a Vacancy</strong> button above to submit an opportunity.</p>" +
+  "</div>";
 
   const filteredJobs = jobs.filter(job => {
 
