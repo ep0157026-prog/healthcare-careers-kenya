@@ -28,11 +28,58 @@ body{
   background:var(--light);
   color:#222;
 }
+.navbar{
+  max-width:1100px;
+  margin:0 auto 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
 
+.logo{
+  font-size:20px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.nav-links{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:18px;
+}
+
+.nav-links a{
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.nav-links a:hover{
+  text-decoration:underline;
+}
+
+.hero{
+  max-width:850px;
+  margin:0 auto;
+}
+
+.hero h1{
+  margin:0 0 10px;
+  font-size:34px;
+}
+
+.hero p{
+  margin:0;
+  font-size:17px;
+  line-height:1.6;
+}
 header{
   background:var(--primary);
   color:white;
-  padding:30px 20px;
+  padding:22px 20px 38px;
   text-align:center;
 }
 
@@ -59,24 +106,33 @@ header p{
 
 .post-vacancy{
   display:inline-block;
-  padding:13px 24px;
+  padding:14px 28px;
   background:var(--green);
   color:white;
   text-decoration:none;
-  border-radius:7px;
+  border-radius:8px;
   font-weight:bold;
+  font-size:15px;
+  box-shadow:0 3px 8px rgba(0,0,0,.12);
 }
 
 .post-vacancy:hover{
   opacity:.9;
 }
+<section class="intro">
 
-.filters{
-  background:white;
-  padding:18px;
-  border-radius:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-  margin-bottom:20px;
+<h2>Find Your Next Healthcare Opportunity</h2>
+
+<p>
+Explore healthcare jobs, internships, attachments, locum opportunities, training and more from across Kenya.
+</p>
+
+</section>
+header{
+  background:var(--primary);
+  color:white;
+  padding:22px 20px 38px;
+  text-align:center;
 }
 
 .filters input,
@@ -188,7 +244,17 @@ footer{
 }
 
 @media(max-width:600px){
-
+.post-vacancy{
+  display:inline-block;
+  padding:14px 28px;
+  background:var(--green);
+  color:white;
+  text-decoration:none;
+  border-radius:8px;
+  font-weight:bold;
+  font-size:15px;
+  box-shadow:0 3px 8px rgba(0,0,0,.12);
+}
   header h1{
     font-size:25px;
   }
@@ -229,17 +295,47 @@ footer{
 
 <header>
 
-<h1>Healthcare Careers Kenya</h1>
+<nav class="navbar">
+
+<div class="logo">
+Healthcare Careers Kenya
+</div>
+
+<div class="nav-links">
+
+<a href="#jobs">Jobs</a>
+<a href="#jobs">Internships</a>
+<a href="#jobs">Attachments</a>
+<a href="#jobs">Locum</a>
+<a href="#jobs">Training</a>
+<a href="#post">Post a Vacancy</a>
+
+</div>
+
+</nav>
+
+<div class="hero">
+
+<h1>Healthcare Careers Across Kenya</h1>
 
 <p>
-Jobs, internships, attachments, locum opportunities and more for healthcare professionals.
+Find jobs, internships, attachments, locum opportunities and other professional opportunities in healthcare.
 </p>
 
+</div>
+
 </header>
+<div class="container"id="jobs">
+<section class="intro">
 
-<div class="container">
+<h2>Find Your Next Healthcare Opportunity</h2>
 
-<div class="actions">
+<p>
+Explore healthcare jobs, internships, attachments, locum opportunities, training and more from across Kenya.
+</p>
+
+</section>
+<div class="actions"id="post">
 
 <a
   href="https://docs.google.com/forms/d/e/1FAIpQLSfFn-fwpytlIsKYqZRoDTt5scl4zy-LJfSMhZXvUPQmws6DZg/viewform?usp=sharing&ouid=115243584880251400944"
