@@ -4,13 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="description"
-content="Healthcare Careers Kenya — jobs, internships, attachments, locum opportunities and professional opportunities for healthcare workers.">
+<meta name="description" content="Healthcare Careers Kenya — jobs, internships, attachments, locum opportunities and professional opportunities for healthcare workers.">
 
 <title>Healthcare Careers Kenya</title>
 
 <style>
-
 :root{
   --primary:#0b5ed7;
   --dark:#123;
@@ -30,8 +28,6 @@ body{
   color:#222;
 }
 
-/* HEADER */
-
 header{
   background:var(--primary);
   color:white;
@@ -49,15 +45,11 @@ header p{
   font-size:16px;
 }
 
-/* MAIN CONTAINER */
-
 .container{
   max-width:1000px;
   margin:25px auto;
   padding:0 15px;
 }
-
-/* POST VACANCY */
 
 .actions{
   text-align:center;
@@ -77,8 +69,6 @@ header p{
 .post-vacancy:hover{
   opacity:.9;
 }
-
-/* FILTERS */
 
 .filters{
   background:white;
@@ -102,8 +92,6 @@ header p{
   margin-bottom:0;
 }
 
-/* JOB CARD */
-
 .job{
   background:white;
   padding:20px;
@@ -124,8 +112,6 @@ header p{
   line-height:1.5;
 }
 
-/* BUTTONS */
-
 .buttons{
   margin-top:15px;
   display:flex;
@@ -140,9 +126,9 @@ header p{
   color:white;
   text-decoration:none;
   border-radius:6px;
-  font-weight:bold;
   border:none;
   cursor:pointer;
+  font-weight:bold;
   font-size:14px;
 }
 
@@ -159,8 +145,6 @@ header p{
   opacity:.9;
 }
 
-/* DESCRIPTION */
-
 .full-description{
   display:none;
   margin-top:15px;
@@ -176,8 +160,6 @@ header p{
   display:block;
 }
 
-/* FOOTER */
-
 footer{
   text-align:center;
   padding:25px;
@@ -186,8 +168,6 @@ footer{
   color:white;
   font-size:14px;
 }
-
-/* MOBILE */
 
 @media(max-width:600px){
 
@@ -223,43 +203,27 @@ footer{
   }
 
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
   <h1>Healthcare Careers Kenya</h1>
-
-  <p>
-    Jobs, internships, attachments, locum opportunities and more
-    for healthcare professionals.
-  </p>
-
+  <p>Jobs, internships, attachments, locum opportunities and more for healthcare professionals.</p>
 </header>
 
 <div class="container">
 
-  <!-- POST A VACANCY -->
-
   <div class="actions">
-
     <a
       href="https://docs.google.com/forms/d/e/1FAIpQLSfFn-fwpytlIsKYqZRoDTt5scl4zy-LJfSMhZXvUPQmws6DZg/viewform?usp=sharing&ouid=115243584880251400944"
       target="_blank"
       rel="noopener"
       class="post-vacancy">
-
       Post a Vacancy
-
     </a>
-
   </div>
-
-
-  <!-- SEARCH AND FILTER -->
 
   <div class="filters">
 
@@ -269,72 +233,332 @@ footer{
       placeholder="Search jobs by title, employer or location">
 
     <select id="typeFilter">
-
-      <option value="all">
-        All Opportunities
-      </option>
-
-      <option value="Job">
-        Jobs
-      </option>
-
-      <option value="Internship">
-        Internships
-      </option>
-
-      <option value="Attachment">
-        Attachments
-      </option>
-
-      <option value="Locum">
-        Locum
-      </option>
-
-      <option value="Volunteer">
-        Volunteer
-      </option>
-
-      <option value="Training">
-        Training
-      </option>
-
-      <option value="Other">
-        Other
-      </option>
-
+      <option value="all">All Opportunities</option>
+      <option value="Job">Jobs</option>
+      <option value="Internship">Internships</option>
+      <option value="Attachment">Attachments</option>
+      <option value="Locum">Locum</option>
+      <option value="Volunteer">Volunteer</option>
+      <option value="Training">Training</option>
+      <option value="Other">Other</option>
     </select>
 
   </div>
 
-
-  <!-- JOBS -->
-
   <div id="jobList">
-
-    <p>
-      Loading opportunities...
-    </p>
-
+    <p>Loading opportunities...</p>
   </div>
 
 </div>
 
-
 <footer>
-
-  <p>
-    © 2026 Healthcare Careers Kenya
-  </p>
+  <p>© 2026 Healthcare Careers Kenya</p>
 </footer>
-
 
 <script>
 
-/* GOOGLE SHEETS API */
-
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0QDZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
+"https://script.google.com/macros/s/AKfycbwbRSWd5A5osXD0DQZKN-EU0p230WGYqdZTWLwYEbl1wyT3CoHVLV231B9c3vNd6yhw/exec";
+
+const jobList =
+document.getElementById("jobList");
+
+const searchInput =
+document.getElementById("searchInput");
+
+const typeFilter =
+document.getElementById("typeFilter");
+
+let jobs = [];
 
 
-/*
-  
+function displayJobs(){
+
+  const search =
+    searchInput.value.toLowerCase().trim();
+
+  const selectedType =
+    typeFilter.value.toLowerCase().trim();
+
+  jobList.innerHTML = "";
+
+  const filteredJobs = jobs.filter(job => {
+
+    const values = Object.values(job);
+
+    const title =
+      String(values[0] || "");
+
+    const employer =
+      String(values[1] || "");
+
+    const location =
+      String(values[2] || "");
+
+    const category =
+      String(values[3] || "");
+
+    const searchableText =
+      (
+        title + " " +
+        employer + " " +
+        location
+      ).toLowerCase();
+
+    const matchesSearch =
+      searchableText.includes(search);
+
+    const matchesCategory =
+      selectedType === "all" ||
+      category.toLowerCase().trim() === selectedType;
+
+    return matchesSearch && matchesCategory;
+
+  });
+
+
+  if(filteredJobs.length === 0){
+
+    jobList.innerHTML =
+      "<p>No opportunities found.</p>";
+
+    return;
+
+  }
+
+
+  filteredJobs.forEach((job,index) => {
+
+    const values =
+      Object.values(job);
+
+    const title =
+      values[0] || "Untitled Opportunity";
+
+    const employer =
+      values[1] || "Not specified";
+
+    const location =
+      values[2] || "Kenya";
+
+    const category =
+      values[3] || "Opportunity";
+
+    const deadline =
+      values[4] || "Not specified";
+
+    const applyLink =
+      values[5] || "";
+
+    const description =
+      values[6] ||
+      "No additional details have been provided.";
+
+
+    const card =
+      document.createElement("div");
+
+    card.className = "job";
+
+
+    const descriptionId =
+      "description-" + index;
+
+
+    card.innerHTML = `
+
+      <h3>
+        ${escapeHTML(title)}
+      </h3>
+
+      <p>
+        <strong>Employer:</strong>
+        ${escapeHTML(employer)}
+      </p>
+
+      <p>
+        <strong>Location:</strong>
+        ${escapeHTML(location)}
+      </p>
+
+      <p>
+        <strong>Category:</strong>
+        ${escapeHTML(category)}
+      </p>
+
+      <p>
+        <strong>Deadline:</strong>
+        ${formatDate(deadline)}
+      </p>
+
+      <div class="buttons">
+
+        ${
+          applyLink
+          ?
+          `
+          <a
+            href="${escapeAttribute(applyLink)}"
+            target="_blank"
+            rel="noopener"
+            class="apply">
+            Apply Now
+          </a>
+          `
+          :
+          ""
+        }
+
+        <button
+          type="button"
+          class="details-button"
+          onclick="toggleDescription('${descriptionId}', this)">
+          View Details
+        </button>
+
+      </div>
+
+      <div
+        id="${descriptionId}"
+        class="full-description">
+
+        <strong>Opportunity Details</strong>
+
+        <br><br>
+
+        ${escapeHTML(description)}
+
+      </div>
+
+    `;
+
+    jobList.appendChild(card);
+
+  });
+
+}
+
+
+function toggleDescription(id,button){
+
+  const description =
+    document.getElementById(id);
+
+  if(description.classList.contains("show")){
+
+    description.classList.remove("show");
+
+    button.textContent =
+      "View Details";
+
+  }else{
+
+    description.classList.add("show");
+
+    button.textContent =
+      "Hide Details";
+
+  }
+
+}
+
+
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+  return String(value)
+    .replace(/"/g,"%22")
+    .replace(/'/g,"%27")
+    .trim();
+
+}
+
+
+function formatDate(value){
+
+  if(!value){
+    return "Not specified";
+  }
+
+  const date = new Date(value);
+
+  if(!isNaN(date.getTime())){
+
+    return date.toLocaleDateString(
+      "en-GB",
+      {
+        day:"2-digit",
+        month:"long",
+        year:"numeric"
+      }
+    );
+
+  }
+
+  return escapeHTML(value);
+
+}
+
+
+/* LOAD VACANCIES FROM GOOGLE SHEETS */
+
+fetch(API_URL)
+
+  .then(response => {
+
+    if(!response.ok){
+      throw new Error("API request failed");
+    }
+
+    return response.json();
+
+  })
+
+  .then(data => {
+
+    jobs = Array.isArray(data)
+      ? data
+      : [];
+
+    displayJobs();
+
+  })
+
+  .catch(error => {
+
+    console.error(
+      "Error loading jobs:",
+      error
+    );
+
+    jobList.innerHTML =
+      "<p>Unable to load opportunities.</p>";
+
+  });
+
+
+searchInput.addEventListener(
+  "input",
+  displayJobs
+);
+
+typeFilter.addEventListener(
+  "change",
+  displayJobs
+);
+
+</script>
+
+</body>
+</html>
