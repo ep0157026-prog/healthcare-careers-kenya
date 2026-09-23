@@ -185,6 +185,17 @@ header{
   font-size:13px;
   font-weight:bold;
 }
+  .report-link{
+  display:inline-block;
+  margin-left:10px;
+  color:#777;
+  font-size:13px;
+  text-decoration:none;
+}
+
+.report-link:hover{
+  text-decoration:underline;
+}
 #jobCount{
   font-weight:bold;
   font-size:18px;
@@ -604,13 +615,11 @@ jobCount.textContent =
           applyLink
           ?
           `
-          <a
-            href="${escapeAttribute(applyLink)}"
-            target="_blank"
-            rel="noopener"
-            class="apply">
-            Apply Now
-          </a>
+         <a
+  href="mailto:ep0157026@gmail.com?subject=Report%20a%20Vacancy"
+  class="report-link">
+  Report this vacancy
+</a>
           `
           :
           ""
