@@ -615,20 +615,21 @@ jobCount.textContent =
 
       <div class="buttons">
 
-        ${
-          applyLink
-          ?
-          `
-         <a
-  href="mailto:ep0157026@gmail.com?subject=Report%20a%20Vacancy"
-  class="report-link">
-  Report this vacancy
-</a>
-          `
-          :
-          ""
-        }
-
+       ${
+  applyLink
+  ?
+  `
+  <a
+    href="${escapeAttribute(applyLink)}"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="apply-button">
+    Apply Now
+  </a>
+  `
+  :
+  ""
+}
         <button
           type="button"
           class="details-button"
