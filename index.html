@@ -426,6 +426,17 @@ const jobCount =
     const title =
       String(values[0] || "");
 
+    const deadline =
+      values[4] || "";
+const filteredJobs = jobs.filter(job => {
+
+    const values = Object.values(job);
+
+    const title =
+      String(values[0] || "");
+
+    const deadline =
+      values[4] || "";
     const employer =
       String(values[1] || "");
 
