@@ -428,15 +428,21 @@ const jobCount =
 
     const deadline =
       values[4] || "";
-const filteredJobs = jobs.filter(job => {
 
-    const values = Object.values(job);
+    if(deadline){
 
-    const title =
-      String(values[0] || "");
+      const deadlineDate =
+        new Date(deadline);
 
-    const deadline =
-      values[4] || "";
+      if(!isNaN(deadlineDate.getTime()) &&
+         deadlineDate < new Date()){
+
+        return false;
+
+      }
+
+    }
+
     const employer =
       String(values[1] || "");
 
