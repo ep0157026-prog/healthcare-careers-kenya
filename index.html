@@ -92,7 +92,12 @@ header p{
 .filters select{
   margin-bottom:0;
 }
-
+#jobCount{
+  font-weight:bold;
+  font-size:18px;
+  margin-bottom:15px;
+  color:var(--dark);
+}
 .job{
   background:white;
   padding:22px;
@@ -270,6 +275,10 @@ Jobs, internships, attachments, locum opportunities and more for healthcare prof
 
 </div>
 
+<div id="jobCount">
+  Loading opportunities...
+</div>
+
 <div id="jobList">
 
 <p>Loading opportunities...</p>
@@ -304,7 +313,8 @@ document.getElementById("jobList");
 let jobs = [];
 
 function displayJobs(){
-
+const jobCount =
+    document.getElementById("jobCount");
   const search =
     searchInput.value.toLowerCase().trim();
 
@@ -347,12 +357,23 @@ function displayJobs(){
 
   });
 
-  if(filteredJobs.length === 0){
+ if(filteredJobs.length === 0){
 
-    jobList.innerHTML =
-      "<p>No opportunities found.</p>";
+  jobCount.textContent =
+    "0 Opportunities Available";
 
-    return;
+  jobList.innerHTML =
+    "<p>No opportunities found.</p>";
+
+  return;
+
+}
+
+jobCount.textContent =
+  filteredJobs.length +
+  (filteredJobs.length === 1
+    ? " Opportunity Available"
+    : " Opportunities Available");
 
   }
 
